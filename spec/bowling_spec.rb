@@ -16,6 +16,11 @@ describe 'Bowling' do
       it { is_expected.to eq(60) }
     end
 
+    context "all spares with a first ball of 4" do
+      let(:score) { [[4,6],[4,6],[4,6],[4,6],[4,6],[4,6],[4,6],[4,6],[4,6],[4,6,4]] }
+      it { is_expected.to eq(140) }
+    end
+
 
   end
 end
