@@ -1,23 +1,16 @@
+require 'frame'
+
 class Bowling
   def self.score(frames)
     return 0 if frames.nil?
     score = 0
-    has_spare = false
-    frames.each_with_index do |frame, index|
-      score += frame_score(frame)
-      score += 4 if has_spare
-      has_spare = spare?(frame)
-      score += frame[2] if index == 9 && has_spare
+    score += frame_score(frames[0])
+    (2..10).each do | frame_idx |
+      current_frame = Frame.new(frames[frame_idx-1])
+      last_frame = Frame.new(frames[frame_idx-2])
+      score += current_frame.score
+      score += current_frame.first_throw if last_frame.spare?
     end
     score
   end
-
-  def self.spare?(frame)
-    frame_score(frame) == 10
-  end
-
-  def self.frame_score(frame)
-    frame[0]+frame[1]
-  end
-
 end

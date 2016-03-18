@@ -21,6 +21,10 @@ describe 'Bowling' do
       it { is_expected.to eq(140) }
     end
 
+    context "9 strikes and a gutter ball" do
+      let(:score) { [[10,0],[10,0],[10,0],[10,0],[10,0],[10,0],[10,0],[10,0],[10,0],[0,0]] }
+      it { is_expected.to eq(240) }
+    end
 
   end
 end
