@@ -1,5 +1,7 @@
 class Bowling
-  def score
-    0
+  def self.score(scores)
+    return 0 if scores.nil?
+
+    scores.flatten.reduce(:+)
   end
 end
