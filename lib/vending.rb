@@ -17,13 +17,35 @@ class Vending
   # [:dime, :dime, :nickel]
   def get_a
     current_amount = coin_amount
-    if current_amount <= 0.65
+    if current_amount < 0.65
       return nil, coin_return
     end
 
     new_amount = current_amount - 0.65
     change = make_change(new_amount)
     return :a, change
+  end
+
+  def get_b
+    current_amount = coin_amount
+    if current_amount < 1
+      return nil, coin_return
+    end
+
+    new_amount = current_amount - 1
+    change = make_change(new_amount)
+    return :b, change
+  end
+
+  def get_c
+    current_amount = coin_amount
+    if current_amount < 1.50
+      return nil, coin_return
+    end
+
+    new_amount = current_amount - 1.50
+    change = make_change(new_amount)
+    return :c, change
   end
 
   # given a decimal amount, returns an array
