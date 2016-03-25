@@ -29,13 +29,26 @@ describe 'Vending' do
   end
 
   describe "#get_a" do
-    before do
-      subject.insert_money(:dime)
+    context "does not have enough money" do
+      before do
+        subject.insert_money(:dime)
+      end
+      it "gives your money back, and a sad panda" do
+        item, coins = subject.get_a
+        expect(item).to eq(nil)
+        expect(coins).to eq([:dime])
+      end
     end
-    it "does not have enough money" do
-      item, coins = subject.get_a
-      expect(item).to eq(nil)
-      expect(coins).to eq([:dime])
+
+    context "with enough money" do
+      before do
+        subject.insert_money(:dollar)
+      end
+      it "gives the user the item and change" do
+        item, coins = subject.get_a
+        expect(item).to eq(:a)
+        expect(coins).to eq([:quarter, :dime])
+      end
     end
   end
 
