@@ -3,6 +3,7 @@ class Vending
 
   def initialize()
     @coins = []
+    @currency = {dollar: 100, quarter: 25, dime: 10, nickel: 5}
   end
 
   def insert_money(coin)
@@ -30,20 +31,11 @@ class Vending
   def make_change(amount)
     amount = amount * 100
 
-    dollars, amount = coins_per_amount(100, amount)
-    quarters, amount = coins_per_amount(25, amount)
-    dimes, amount = coins_per_amount(10, amount)
-    nickels, amount = coins_per_amount(5, amount)
-
-    coins_for_change(dollars, quarters, dimes, nickels)
-  end
-
-  def coins_for_change(dollars, quarters, dimes, nickels)
     change = []
-    change << [:dollar] * dollars
-    change << [:quarter] * quarters
-    change << [:dime] * dimes
-    change << [:nickel] * nickels
+    @currency.each do |key, value|
+      num_coins, amount = coins_per_amount(value, amount)
+      change << [key] * num_coins
+    end
     change.flatten
   end
 
@@ -55,11 +47,7 @@ class Vending
 
   def coin_amount
     @coins.reduce(0) do |total, coin|
-      total += 0.05 if coin == :nickel
-      total += 0.10 if coin == :dime
-      total += 0.50 if coin == :quarter
-      total += 1 if coin == :dollar
-      total
+      total += @currency[coin] / 100
     end
   end
 end
